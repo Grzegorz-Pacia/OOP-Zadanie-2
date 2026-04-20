@@ -16,6 +16,10 @@ namespace Zadanie2C_
             this.playerName = playerName;
             this.playerSymbol = playerSymbol;
         }
+
+        public string getPlayerName() { return playerName; }
+
+        public char getPlayerSymbol() { return playerSymbol; }
     }
 
     class Board
@@ -95,12 +99,93 @@ namespace Zadanie2C_
 
             return 'T';
         }
+
+        public void DisplayBoardContents()
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    Console.Write(boardContents[i, j]);
+                    if (j != 2)
+                    {
+                        Console.Write("|");
+                    }
+                }
+                Console.WriteLine();
+                if (i != 2) 
+                {
+                    Console.WriteLine("-+-+-");
+                }
+            }
+        }
+    }
+
+    class Game
+    {
+        private Board board;
+        private Player[] players;
+        private int currentPlayer;
+
+        public Game(string player1Name, string player2Name)
+        {
+            this.board = new Board();
+            this.players = new Player[2];
+            this.players[0] = new Player(player1Name, 'O');
+            this.players[1] = new Player(player2Name, 'X');
+            this.currentPlayer = 0;
+        }
+
+        public bool nextTurn()
+        {
+            Console.Clear();
+            Console.WriteLine("Tura gracza " + players[currentPlayer].getPlayerName() + ".");
+            board.DisplayBoardContents();
+            Console.WriteLine("Podaj pole, na którym chcesz umieścić symbol \"" + players[currentPlayer].getPlayerSymbol() + "\" w postaci \"x y\",\n" +
+                              "gdzie x to numer wiersza, a y to numer kolumny:");
+            do
+            {
+                string targetTile = Console.ReadLine();
+                if (targetTile.Length == 3 && targetTile[1] == ' '
+                   && (targetTile[0] == '1' || targetTile[0] == '2' || targetTile[0] == '3')
+                   && (targetTile[2] == '1' || targetTile[2] == '2' || targetTile[2] == '3')
+                   && (board.GetTileContent((targetTile[0]-'1'), (targetTile[2]-'1')) == ' '))
+                {
+                    board.SetTileContent((targetTile[0]-'1'), (targetTile[2]-'1'), players[currentPlayer].getPlayerSymbol());
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Podano pole docelowe w nieprawidłowej postaci lub podano pole, które jest już zajęte.\n" +
+                                      "Spróbuj ponownie:");
+                }
+            } while(true);
+
+            if (board.CheckWinCondition() == players[currentPlayer].getPlayerSymbol())
+            {
+                Console.Clear();
+                board.DisplayBoardContents();
+                Console.WriteLine("Zwyciężą gracz " + players[currentPlayer].getPlayerName() + "!");
+                return false;
+            }
+            else if (board.CheckWinCondition() == 'T')
+            {
+                Console.Clear();
+                board.DisplayBoardContents();
+                Console.WriteLine("Remis!");
+                return false;
+            }
+            currentPlayer = Math.Abs(currentPlayer - 1);
+            return true;
+        }
     }
 
     internal class Program
     {
         static void Main(string[] args)
         {
+            Game game1 = new Game("Gracz 1", "Gracz 2");
+            while(game1.nextTurn());
         }
     }
 }
