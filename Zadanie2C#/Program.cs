@@ -17,9 +17,9 @@ namespace Zadanie2C_
             this.playerSymbol = playerSymbol;
         }
 
-        public string getPlayerName() { return playerName; }
+        public string GetPlayerName() { return playerName; }
 
-        public char getPlayerSymbol() { return playerSymbol; }
+        public char GetPlayerSymbol() { return playerSymbol; }
     }
 
     class Board
@@ -131,9 +131,9 @@ namespace Zadanie2C_
         public bool NextTurn() //przeprowadza kolejną turę gry
         {
             Console.Clear();
-            Console.WriteLine("Tura gracza " + players[currentPlayer].getPlayerName() + ".\n");
+            Console.WriteLine("Tura gracza " + players[currentPlayer].GetPlayerName() + ".\n");
             board.DisplayBoardContents();
-            Console.WriteLine("\nPodaj pole, na którym chcesz umieścić symbol \"" + players[currentPlayer].getPlayerSymbol() + "\", w postaci \"x y\",\n" +
+            Console.WriteLine("\nPodaj pole, na którym chcesz umieścić symbol \"" + players[currentPlayer].GetPlayerSymbol() + "\", w postaci \"x y\",\n" +
                               "gdzie x to numer wiersza, a y to numer kolumny:");
             do //powtarza się do momentu, gdy obecny gracz w poprawny sposób poda niezajęte pole
             {
@@ -143,7 +143,7 @@ namespace Zadanie2C_
                    && (targetTile[2] == '1' || targetTile[2] == '2' || targetTile[2] == '3')
                    && (board.GetTileContent((targetTile[0]-'1'), (targetTile[2]-'1')) == ' '))
                 {
-                    board.SetTileContent((targetTile[0]-'1'), (targetTile[2]-'1'), players[currentPlayer].getPlayerSymbol()); //odjęcie '1' od wartości char daje tu poprawną wartość int pola w tablicy (indexowanie od 0)
+                    board.SetTileContent((targetTile[0]-'1'), (targetTile[2]-'1'), players[currentPlayer].GetPlayerSymbol()); //odjęcie '1' od wartości char daje tu poprawną wartość int pola w tablicy (indexowanie od 0)
                     break;
                 }
                 else
@@ -153,11 +153,11 @@ namespace Zadanie2C_
                 }
             } while(true);
 
-            if (board.CheckWinCondition() == players[currentPlayer].getPlayerSymbol()) //sprawdza, czy obecny gracz wygrał i kończy grę
+            if (board.CheckWinCondition() == players[currentPlayer].GetPlayerSymbol()) //sprawdza, czy obecny gracz wygrał i kończy grę
             {
                 Console.Clear();
                 board.DisplayBoardContents();
-                Console.WriteLine("\nZwycięża gracz " + players[currentPlayer].getPlayerName() + "!");
+                Console.WriteLine("\nZwycięża gracz " + players[currentPlayer].GetPlayerName() + "!");
                 return false; //gra się zakończyła
             }
             else if (board.CheckWinCondition() == 'T') //sprawdza, czy doszło do remisu i kończy grę
