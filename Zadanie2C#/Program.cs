@@ -177,7 +177,7 @@ namespace Zadanie2C_
         static void Main(string[] args)
         {
             Game game1 = new Game("Gracz 1", "Gracz 2"); //tworzy obiekt gry, którego konstruktor tworzy dwa obiekty graczy (z podanymi nazwami) i obiekt planszy
-            while(game1.NextTurn()); //powtarza się do momentu, gdy metoda NextTurn zwróci false, czyli momentu do zakończenia się gry
+            while(game1.NextTurn()); //powtarza się do momentu, gdy metoda NextTurn zwróci false, czyli do zakończenia się gry
         }
     }
 }
